@@ -1,0 +1,74 @@
+<ion-view cache-view="false" view-title="Arquivos2" hide-back-button="true">
+  <ion-nav-buttons side="right"> 
+    <button class="button button-stable" ng-hide="Arquivos2.inserting || Arquivos2.editing" ng-click="Arquivos2.startInserting()"> <i class="icon ion-plus-round"></i> </button>
+    <button class="button button-stable" ng-show="Arquivos2.inserting || Arquivos2.editing" ng-click="Arquivos2.post()"> <i class="icon ion-checkmark"></i> </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="left">
+    <button class="button button-icon button-clear ion-navicon" ng-hide="Arquivos2.inserting || Arquivos2.editing" menu-toggle="left"> </button>
+    <button class="button button-stable" ng-show="Arquivos2.inserting || Arquivos2.editing" ng-click="Arquivos2.cancel()"> <i class="icon ion-android-arrow-back"></i> </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div ng-hide="Arquivos2.inserting || Arquivos2.editing" data-component="crn-datasource-filter" id="crn-datasource-filter-general" class="">
+      <label class="item item-input" id="cloud-search1">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input type="text"  ng-model="vars.search" cronapp-filter="nome;" cronapp-filter-operator="" cronapp-filter-autopost="true" crn-datasource="Arquivos2" value="" placeholder="{{'template.crud.search' | translate}}">
+      </label>
+    </div>   
+    <div class="component-holder ng-binding ng-scope ui-draggable ui-draggable-handle" data-component="crn-datasource" id="crn-datasource-906854">
+      <datasource  name="Arquivos2" entity="api/cronapi/crud/app.entity.Arquivos2" keys="id" rows-per-page="10" delete-message="Deseja remover?" class=""></datasource>
+    </div>
+    <div crn-datasource="Arquivos2" class="" ng-hide="Arquivos2.editing || Arquivos2.inserting">
+      <ion-list can-swipe="listCanSwipe">
+        <ion-item ng-repeat="rowData in datasource.data" class="item" ng-click="datasource.startEditing(rowData)">
+          <div class="row">
+            <div class="col">
+              {{rowData.nome}}
+            </div>
+            <div class="col">
+              <button ng-if="rowData.arquivo" class="button" ng-click="cronapi.internal.downloadFileEntityMobile(datasource, 'arquivo', $index)">
+                  <span class="icon ion-android-download"></span>
+              </button>
+            </div>
+          </div>
+          <ion-option-button class="button-positive" ng-click="datasource.startEditing(rowData)">
+            <i class="icon ion-edit"></i>
+          </ion-option-button>
+          <ion-option-button class="button-assertive" ng-click="datasource.remove(rowData)">
+            &nbsp;
+            <i class="icon ion-trash-a"></i>
+          </ion-option-button>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div ng-show="Arquivos2.editing || Arquivos2.inserting">
+      <form crn-datasource="Arquivos2">
+        <fieldset ng-disabled="!Arquivos2.editing &amp;&amp; !Arquivos2.inserting">
+          <div class="list">
+            <!-- nome begin -->
+            <label for="textinput-nome" class="item item-input item-stacked-label">
+            <span class="input-label">Nome</span>
+            <input
+            type="text"
+            placeholder="Nome"
+            ng-model="Arquivos2.active.nome"
+            id="textinput-nome"
+            name="textinput-nome"
+            >
+            </label>
+            <!-- arquivo begin -->
+            <div class="component-holder ng-binding ng-scope" data-component="crn-dynamic-file" >
+              <div class="item item-input item-stacked-label">
+                <label class="input-label">Arquivo</label>
+                <div class="form-group">
+                  <div dynamic-file="" ng-model="Arquivos2.active.arquivo" max-file-size="5MB" class="dynamic-image-container" ng-required="false">
+                    {{"template.crud.clickToAddFile" | translate}}
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </ion-content>
+</ion-view>
